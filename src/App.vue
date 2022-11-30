@@ -3,6 +3,7 @@
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import HelloWorld from './components/HelloWorld.vue'
 import { ref } from 'vue';
+import TodoList from './components/TodoList.vue';
 
 const showHome = ref(true)
 
@@ -14,6 +15,7 @@ const hideHome = () => {
 <template>
   <button v-if="showHome" @click="hideHome">Hide Home Screen</button>
   <HelloWorld v-if="showHome" msg="Vite + Vue" msg2="second message" />
+  <TodoList v-if="!showHome" />
 </template>
 
 <style scoped>
