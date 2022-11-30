@@ -16,7 +16,7 @@ const addItem = () => {
 }
 
 const removeItem = (todo: any) => {
-  todos.value = todos.value.filter(item => item.text != todo.text)
+  todos.value = todos.value.filter(t => t !== todo)
 }
 </script>
 
@@ -38,7 +38,5 @@ const removeItem = (todo: any) => {
 </template>
 
 <style scoped>
-.read-the-docs {
-  color: #888;
-}
+
 </style>
