@@ -10,7 +10,6 @@ const todos = ref([
 ])
 
 const addItem = () => {
-  console.log('submit form')
   todos.value.push({ id: id++, text: currentText.value })
   currentText.value = ''
 }
@@ -22,7 +21,7 @@ const removeItem = (todo: any) => {
 
 <template>
   <div class="card">
-    <h2>Enter your todo items below:</h2>
+    <h2 class="underline">Enter your todo items below:</h2>
     <form @submit.prevent="addItem">
       <input v-model="currentText">
       <button>Add Item</button>
