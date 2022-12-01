@@ -20,11 +20,11 @@ const removeItem = (todo: any) => {
 </script>
 
 <template>
-  <div class="card">
-    <h2 class="underline">Enter your todo items below:</h2>
+  <div class="flex flex-col text-center">
+    <h2 class="text-lg font-bold my-2">Enter your todo items below:</h2>
     <form @submit.prevent="addItem">
-      <input v-model="currentText">
-      <button>Add Item</button>
+      <input class="border-2 rounded-md border-black mr-2" v-model="currentText">
+      <button class="rounded-lg bg-green-400 p-3">Add Item</button>
     </form>
 
     <ul>
