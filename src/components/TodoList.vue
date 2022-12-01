@@ -30,7 +30,7 @@ const removeItem = (todo: any) => {
     <ul>
       <li v-for="todo in todos" :key="todo.id">
         {{ todo.text }}
-        <button @click="removeItem(todo)">X</button>
+        <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">X</button>
       </li>
     </ul>
   </div>
