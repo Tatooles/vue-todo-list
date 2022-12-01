@@ -17,6 +17,22 @@ const addItem = () => {
 const removeItem = (todo: any) => {
   todos.value = todos.value.filter(t => t !== todo)
 }
+
+const sortList = () => {
+  todos.value.sort((a, b) => {
+    if (a.text < b.text) {
+      return -1
+    } else if (a.text > b.text) {
+      return 1
+    } else {
+      return 0
+    }
+  })
+}
+
+const reverseList = () => {
+  todos.value.reverse()
+}
 </script>
 
 <template>
@@ -33,6 +49,9 @@ const removeItem = (todo: any) => {
         <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">X</button>
       </li>
     </ul>
+
+    <button @click="sortList" class="bg-gray-500 rounded-md mt-8 mb-2">Sort list</button>
+    <button @click="reverseList" class="bg-gray-500 rounded-md">Reverse Order</button>
   </div>
 </template>
 
