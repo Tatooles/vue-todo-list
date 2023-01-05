@@ -44,9 +44,10 @@ const reverseList = () => {
     </form>
 
     <ul>
-      <li v-for="todo in todos" :key="todo.id">
+      <li class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle" v-for="todo in todos"
+        :key="todo.id">
         {{ todo.text }}
-        <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">X</button>
+        <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">Delete</button>
       </li>
     </ul>
 
