@@ -9,6 +9,10 @@ const todos = ref([
   { id: id++, text: 'example todo' }
 ])
 
+const completed = ref([
+  { id: id++, text: 'example completed' }
+])
+
 const addItem = () => {
   todos.value.push({ id: id++, text: currentText.value })
   currentText.value = ''
@@ -19,7 +23,8 @@ const removeItem = (todo: any) => {
 }
 
 const completeItem = (todo: any) => {
-  // Move item to other list
+  todos.value = todos.value.filter(t => t !== todo)
+  completed.value.push(todo)
 }
 
 const sortList = () => {
@@ -64,8 +69,8 @@ const reverseList = () => {
     <div class="mt-3">
       <h2>Completed items</h2>
       <ul>
-        <li>
-          test item
+        <li v-for="item in completed" :key="item.id">
+          {{ item.text }}
         </li>
       </ul>
     </div>
