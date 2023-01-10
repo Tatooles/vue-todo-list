@@ -67,9 +67,9 @@ const reverseList = () => {
     <button @click="reverseList" class="bg-gray-500 rounded-md">Reverse Order</button>
 
     <div class="mt-3">
-      <h2>Completed items</h2>
+      <h2 class="border-b-2">Completed items</h2>
       <ul>
-        <li v-for="item in completed" :key="item.id">
+        <li class="text-gray-400" v-for="item in completed" :key="item.id">
           {{ item.text }}
         </li>
       </ul>
