@@ -14,10 +14,6 @@ const completed = ref([
   { id: id++, text: 'example completed' }
 ])
 
-const toggleCompleted = () => {
-  showCompleted.value = !showCompleted.value
-}
-
 const addItem = () => {
   todos.value.push({ id: id++, text: currentText.value })
   currentText.value = ''
@@ -72,15 +68,15 @@ const reverseList = () => {
     <button @click="reverseList" class="bg-gray-500 rounded-md">Reverse Order</button>
 
     <div v-if="showCompleted" class="mt-3">
-      <h2 class="border-b-2 inline-block">Completed items</h2><button @click="toggleCompleted"
-        class="relative -right-24">V</button>
+      <h2 class="border-b-2 inline-block">Completed items</h2><button @click="showCompleted = false"
+        class="relative -right-20">V</button>
       <ul>
         <li class="text-gray-400" v-for="item in completed" :key="item.id">
           {{ item.text }}
         </li>
       </ul>
     </div>
-    <div v-else><button @click="toggleCompleted" class="relative -right-36 top-3">&lt;</button></div>
+    <div v-else><button @click="showCompleted = true" class="relative -right-36 top-3">&lt;</button></div>
   </div>
 </template>
 
