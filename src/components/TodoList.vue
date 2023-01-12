@@ -46,7 +46,7 @@ const reverseList = () => {
 </script>
 
 <template>
-  <div class="flex flex-col text-center">
+  <div class="p-4 flex flex-col text-center w-1/3 border-r-2 border-l-2 border-black h-screen overflow-auto">
     <h2 class="text-lg font-bold my-2">Enter your todo items below:</h2>
     <form @submit.prevent="addItem">
       <input class="border-2 rounded-md border-black mr-2" v-model="currentText">
@@ -77,6 +77,12 @@ const reverseList = () => {
       </ul>
     </div>
     <div v-else><button @click="showCompleted = true" class="relative -right-36 top-3">&lt;</button></div>
+  </div>
+
+  <div class="p-3  w-1/3 text-center">
+    <h2 class="text-3xl font-semibold">Description</h2>
+    <h3>Task name</h3>
+    <p>Task decription</p>
   </div>
 </template>
 
