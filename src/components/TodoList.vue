@@ -31,9 +31,10 @@ const completeItem = (todo: any) => {
   }
 }
 
-const updateCurrent = () => {
-  if (currentTask.value < todos.value.length - 1)
-    currentTask.value += 1
+const updateCurrent = (id: number) => {
+  // if (currentTask.value < todos.value.length - 1)
+  //   currentTask.value += 1
+  currentTask.value = id;
 }
 
 const sortList = () => {
@@ -63,7 +64,8 @@ const reverseList = () => {
 
     <ul>
       <template v-for="todo in todos">
-        <li class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
+        <li @click="updateCurrent(todo.id)"
+          class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
           v-if="!todo.completed" :key="todo.id">
           {{ todo.text }} id is {{ todo.id }}
           <div>
@@ -82,7 +84,7 @@ const reverseList = () => {
         class="relative -right-20">V</button>
       <ul>
         <template v-for="todo in todos">
-          <li class="text-gray-400" :key="todo.id" v-if="todo.completed">
+          <li @click="updateCurrent(todo.id)" class="text-gray-400" :key="todo.id" v-if="todo.completed">
             {{ todo.text }} {{ todo.id }}
           </li>
         </template>
@@ -96,8 +98,6 @@ const reverseList = () => {
     <h3>Task name</h3>
     <p>{{ todos.filter(t => t.id === currentTask)[0].description }}</p>
   </div>
-  <button @click="updateCurrent" class="bg-gray-500 rounded-md">Update task</button>
-  current: {{ currentTask }}
 </template>
 
 <style scoped>
