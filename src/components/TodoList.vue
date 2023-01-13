@@ -10,15 +10,12 @@ const showCompleted = ref(true)
 const currentTask = ref(0)
 
 const todos = ref([
-  { id: id++, text: 'example todo', description: 'example decription' }
-])
-
-const completed = ref([
-  { id: id++, text: 'example completed', description: 'example description number 2' }
+  { id: id++, text: 'example todo', description: 'example decription', completed: false },
+  { id: id++, text: 'example completed', description: 'example description number 2', completed: true }
 ])
 
 const addItem = () => {
-  todos.value.push({ id: id++, text: currentText.value, description: 'placeholder description' + id })
+  todos.value.push({ id: id++, text: currentText.value, description: 'placeholder description' + id, completed: false })
   currentText.value = ''
 }
 
@@ -27,8 +24,11 @@ const removeItem = (todo: any) => {
 }
 
 const completeItem = (todo: any) => {
-  todos.value = todos.value.filter(t => t !== todo)
-  completed.value.push(todo)
+  for (const t of todos.value) {
+    if (t === todo) {
+      t.completed = true;
+    }
+  }
 }
 
 const updateCurrent = () => {
@@ -62,14 +62,16 @@ const reverseList = () => {
     </form>
 
     <ul>
-      <li class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
-        v-for="todo in todos" :key="todo.id">
-        {{ todo.text }} id is {{ todo.id }}
-        <div>
-          <button class="bg-green-500 p-1 rounded-md mr-1" @click="completeItem(todo)">Done</button>
-          <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">Delete</button>
-        </div>
-      </li>
+      <template v-for="todo in todos">
+        <li class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
+          v-if="!todo.completed" :key="todo.id">
+          {{ todo.text }} id is {{ todo.id }}
+          <div>
+            <button class="bg-green-500 p-1 rounded-md mr-1" @click="completeItem(todo)">Done</button>
+            <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">Delete</button>
+          </div>
+        </li>
+      </template>
     </ul>
 
     <button @click="sortList" class="bg-gray-500 rounded-md mt-8 mb-2">Sort list</button>
@@ -79,9 +81,11 @@ const reverseList = () => {
       <h2 class="border-b-2 inline-block">Completed items</h2><button @click="showCompleted = false"
         class="relative -right-20">V</button>
       <ul>
-        <li class="text-gray-400" v-for="item in completed" :key="item.id">
-          {{ item.text }} {{ item.id }}
-        </li>
+        <template v-for="todo in todos">
+          <li class="text-gray-400" :key="todo.id" v-if="todo.completed">
+            {{ todo.text }} {{ todo.id }}
+          </li>
+        </template>
       </ul>
     </div>
     <div v-else><button @click="showCompleted = true" class="relative -right-36 top-3">&lt;</button></div>
