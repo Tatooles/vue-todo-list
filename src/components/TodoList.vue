@@ -6,16 +6,19 @@ let id = 0
 const currentText = ref('')
 const showCompleted = ref(true)
 
+// This is the ID of the current active task for which we will show the decription
+const currentTask = ref(0)
+
 const todos = ref([
-  { id: id++, text: 'example todo' }
+  { id: id++, text: 'example todo', description: 'example decription' }
 ])
 
 const completed = ref([
-  { id: id++, text: 'example completed' }
+  { id: id++, text: 'example completed', description: 'example description number 2' }
 ])
 
 const addItem = () => {
-  todos.value.push({ id: id++, text: currentText.value })
+  todos.value.push({ id: id++, text: currentText.value, description: 'placeholder description' + id })
   currentText.value = ''
 }
 
@@ -26,6 +29,11 @@ const removeItem = (todo: any) => {
 const completeItem = (todo: any) => {
   todos.value = todos.value.filter(t => t !== todo)
   completed.value.push(todo)
+}
+
+const updateCurrent = () => {
+  if (currentTask.value < todos.value.length - 1)
+    currentTask.value += 1
 }
 
 const sortList = () => {
@@ -56,7 +64,7 @@ const reverseList = () => {
     <ul>
       <li class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
         v-for="todo in todos" :key="todo.id">
-        {{ todo.text }}
+        {{ todo.text }} id is {{ todo.id }}
         <div>
           <button class="bg-green-500 p-1 rounded-md mr-1" @click="completeItem(todo)">Done</button>
           <button class="bg-red-600 p-1 rounded-md" @click="removeItem(todo)">Delete</button>
@@ -72,7 +80,7 @@ const reverseList = () => {
         class="relative -right-20">V</button>
       <ul>
         <li class="text-gray-400" v-for="item in completed" :key="item.id">
-          {{ item.text }}
+          {{ item.text }} {{ item.id }}
         </li>
       </ul>
     </div>
@@ -82,8 +90,10 @@ const reverseList = () => {
   <div class="p-3  w-1/3 text-center">
     <h2 class="text-3xl font-semibold">Description</h2>
     <h3>Task name</h3>
-    <p>Task decription</p>
+    <p>{{ todos.filter(t => t.id === currentTask)[0].description }}</p>
   </div>
+  <button @click="updateCurrent" class="bg-gray-500 rounded-md">Update task</button>
+  current: {{ currentTask }}
 </template>
 
 <style scoped>
