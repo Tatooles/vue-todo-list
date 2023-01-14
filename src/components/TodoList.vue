@@ -4,6 +4,7 @@ import { ref } from 'vue'
 let id = 0
 
 const currentText = ref('')
+const currentDecription = ref('')
 const showCompleted = ref(true)
 
 // This is the ID of the current active task for which we will show the decription
@@ -32,9 +33,14 @@ const completeItem = (todo: any) => {
 }
 
 const updateCurrent = (id: number) => {
-  // if (currentTask.value < todos.value.length - 1)
-  //   currentTask.value += 1
   currentTask.value = id;
+}
+
+const updateDecription = () => {
+  // Update the decription of the current task
+  let current = todos.value.filter(t => t.id === currentTask.value)
+  current[0].description = currentDecription.value
+  currentDecription.value = ''
 }
 
 const sortList = () => {
@@ -97,6 +103,10 @@ const reverseList = () => {
     <h2 class="text-3xl font-semibold">Description</h2>
     <h3>Task name</h3>
     <p>{{ todos.filter(t => t.id === currentTask)[0].description }}</p>
+    <form @submit.prevent="updateDecription">
+      <textarea cols="30" rows="10" v-model="currentDecription"></textarea>
+      <button>Update Description</button>
+    </form>
   </div>
 </template>
 
