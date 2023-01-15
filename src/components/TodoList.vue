@@ -8,12 +8,13 @@ const currentDecription = ref('')
 const showCompleted = ref(true)
 
 // This is the ID of the current active task for which we will show the decription
-const currentTask = ref(0)
 
 const todos = ref([
   { id: id++, text: 'example todo', description: 'example decription', completed: false },
   { id: id++, text: 'example completed', description: 'example description number 2', completed: true }
 ])
+
+const currentTask = ref(todos.value[0])
 
 const addItem = () => {
   todos.value.push({ id: id++, text: currentText.value, description: 'placeholder description' + id, completed: false })
@@ -32,14 +33,13 @@ const completeItem = (todo: any) => {
   }
 }
 
-const updateCurrent = (id: number) => {
-  currentTask.value = id;
+const updateCurrent = (todo: any) => {
+  currentTask.value = todo;
 }
 
 const updateDecription = () => {
   // Update the decription of the current task
-  let current = todos.value.filter(t => t.id === currentTask.value)
-  current[0].description = currentDecription.value
+  currentTask.value.description = currentDecription.value
   currentDecription.value = ''
 }
 
@@ -70,7 +70,7 @@ const reverseList = () => {
 
     <ul>
       <template v-for="todo in todos">
-        <li @click="updateCurrent(todo.id)"
+        <li @click="updateCurrent(todo)"
           class="flex justify-between mt-2 hover:bg-gray-400 rounded-md pl-2 align-middle border-gray-600 border-2"
           v-if="!todo.completed" :key="todo.id">
           {{ todo.text }} id is {{ todo.id }}
@@ -90,7 +90,7 @@ const reverseList = () => {
         class="relative -right-20">V</button>
       <ul>
         <template v-for="todo in todos">
-          <li @click="updateCurrent(todo.id)" class="text-gray-400" :key="todo.id" v-if="todo.completed">
+          <li @click="updateCurrent(todo)" class="text-gray-400" :key="todo.id" v-if="todo.completed">
             {{ todo.text }} {{ todo.id }}
           </li>
         </template>
@@ -102,7 +102,7 @@ const reverseList = () => {
   <div class="p-3  w-1/3 text-center">
     <h2 class="text-3xl font-semibold">Description</h2>
     <h3>Task name</h3>
-    <p>{{ todos.filter(t => t.id === currentTask)[0].description }}</p>
+    <p>{{ todos.filter(t => t === currentTask)[0].description }}</p>
     <form @submit.prevent="updateDecription">
       <textarea cols="30" rows="10" v-model="currentDecription"></textarea>
       <button>Update Description</button>
