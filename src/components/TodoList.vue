@@ -4,10 +4,8 @@ import { ref } from 'vue'
 let id = 0
 
 const currentText = ref('')
-const currentDecription = ref('')
+const currentDescription = ref('')
 const showCompleted = ref(true)
-
-// This is the ID of the current active task for which we will show the decription
 
 const todos = ref([
   { id: id++, text: 'example todo', description: 'example decription', completed: false },
@@ -35,12 +33,7 @@ const completeItem = (todo: any) => {
 
 const updateCurrent = (todo: any) => {
   currentTask.value = todo;
-}
-
-const updateDecription = () => {
-  // Update the decription of the current task
-  currentTask.value.description = currentDecription.value
-  currentDecription.value = ''
+  currentDescription.value = todo.description;
 }
 
 const sortList = () => {
@@ -101,12 +94,7 @@ const reverseList = () => {
 
   <div class="p-3  w-1/3 text-center">
     <h2 class="text-3xl font-semibold">Description</h2>
-    <h3>Task name</h3>
-    <p>{{ todos.filter(t => t === currentTask)[0].description }}</p>
-    <form @submit.prevent="updateDecription">
-      <textarea cols="30" rows="10" v-model="currentDecription"></textarea>
-      <button>Update Description</button>
-    </form>
+    <textarea cols="30" rows="10" v-model="currentDescription"></textarea>
   </div>
 </template>
 
